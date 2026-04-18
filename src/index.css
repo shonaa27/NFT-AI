@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-white font-['Outfit'];
+    overflow-x: hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-['Space_Grotesk'];
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)];
+  }
+  
+  .glass-input {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-xl focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan outline-none transition-all duration-300;
+  }
+  
+  .neon-text-cyan {
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.7), 0 0 20px rgba(0, 240, 255, 0.5);
+  }
+  
+  .neon-text-purple {
+    text-shadow: 0 0 10px rgba(176, 38, 255, 0.7), 0 0 20px rgba(176, 38, 255, 0.5);
+  }
+  
+  .neon-border-cyan {
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.5), inset 0 0 10px rgba(0, 240, 255, 0.5);
+  }
+  
+  .neon-button {
+    @apply relative overflow-hidden rounded-xl font-bold transition-all duration-300;
+    background: linear-gradient(90deg, theme('colors.neon.cyan'), theme('colors.neon.purple'));
+    background-size: 200% auto;
+  }
+  
+  .neon-button:hover {
+    background-position: right center;
+    box-shadow: 0 0 20px theme('colors.neon.cyan'), 0 0 40px theme('colors.neon.purple');
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/20 rounded-full hover:bg-white/30 transition-colors;
+  }
+}
