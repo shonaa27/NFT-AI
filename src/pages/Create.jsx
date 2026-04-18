@@ -12,25 +12,41 @@ export default function Create() {
   const [mintSuccess, setMintSuccess] = useState(false);
   const navigate = useNavigate();
   
-  const generateImage = () => {
-    if (!prompt) return;
-    
-    setIsGenerating(true);
-    setGeneratedImage(null);
-    setMintSuccess(false);
-    
-    // Mock generation time
-    setTimeout(() => {
-      // Pick a random image based on prompt length just for variety
-      const images = [
-        "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=800&q=80",
-        "https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?w=800&q=80",
-        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80"
-      ];
-      setGeneratedImage(images[prompt.length % images.length]);
-      setIsGenerating(false);
-    }, 3500);
-  };
+  const generateImage = async () => {
+  if (!prompt) return;
+
+  setIsGenerating(true);
+  setGeneratedImage(null);
+  setMintSuccess(false);
+
+  try {
+    const res = await fetch("http://127.0.0.1:5000/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prompt }),
+    });
+
+    const data = await res.json();
+    console.log("AI RESPONSE:", data);
+
+    // 🔥 IMPORTANT: try both keys
+    if (data.image) {
+      setGeneratedImage(data.image);
+    } else if (data.url) {
+      setGeneratedImage(data.url);
+    } else {
+      alert("No image in response");
+    }
+
+  } catch (err) {
+    console.error("ERROR:", err);
+    alert("AI request failed");
+  }
+
+  setIsGenerating(false);
+};
 
   const handleMint = () => {
     setIsMinting(true);
